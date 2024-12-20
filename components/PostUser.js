@@ -26,7 +26,6 @@ const PostUser = ({ setOpen }) => {
       image: '',
       description: "",
     },
-    resolver: yupResolver(PostFormValidation),
   });
 
   useEffect(() => {
@@ -65,6 +64,8 @@ const PostUser = ({ setOpen }) => {
   };
 
   const handleSubmitForm = (data) => {
+    console.log("data",data)
+   try {
     setLoader(true);
     const { title, description, date } = data;
     const newPost = { title, image, description, date };
@@ -78,6 +79,9 @@ const PostUser = ({ setOpen }) => {
       setOpen !== undefined ? window.location.reload() : "";
       reset();
     }, 3000);
+   } catch (error) {
+    
+   }
   };
 
   return (
