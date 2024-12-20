@@ -64,7 +64,6 @@ const PostUser = ({ setOpen }) => {
   };
 
   const handleSubmitForm = (data) => {
-    console.log("data",data)
    try {
     setLoader(true);
     const { title, description, date } = data;
