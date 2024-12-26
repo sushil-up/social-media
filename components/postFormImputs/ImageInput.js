@@ -2,13 +2,19 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 
-export default function ImageInput({ control, label, name, type, errors, onChange }) {
+export default function ImageInput({
+  control,
+  label,
+  name,
+  type,
+  errors,
+  onChange,
+}) {
   return (
     <Controller
       name={name}
       control={control}
       defaultValue=""
-      rules={{ required: "File is required" }}
       render={({ field }) => (
         <TextField
           {...field}

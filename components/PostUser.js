@@ -23,9 +23,10 @@ const PostUser = ({ setOpen }) => {
     defaultValues: {
       title: "",
       date: "",
-      image: '',
+      image: "",
       description: "",
     },
+    resolver: yupResolver(PostFormValidation),
   });
 
   useEffect(() => {
@@ -64,7 +65,6 @@ const PostUser = ({ setOpen }) => {
   };
 
   const handleSubmitForm = (data) => {
-   try {
     setLoader(true);
     const { title, description, date } = data;
     const newPost = { title, image, description, date };
@@ -78,9 +78,6 @@ const PostUser = ({ setOpen }) => {
       setOpen !== undefined ? window.location.reload() : "";
       reset();
     }, 3000);
-   } catch (error) {
-    
-   }
   };
 
   return (
@@ -124,18 +121,20 @@ const PostUser = ({ setOpen }) => {
               errors={errors}
               label="Date"
               className="formDate"
+              value={new Date()}
               type="date"
+              defaultValue={new Date()}
             />
           </div>
         </div>
 
         <div style={{ margin: "20px 0" }}>
           <TextInput
-            name="description "
+            name="description"
             control={control}
             errors={errors}
             label="Description"
-            className="formDescription overflow-auto"
+            className="formDescription"
             type="text"
           />
         </div>
@@ -148,6 +147,7 @@ const PostUser = ({ setOpen }) => {
             label=""
             className="formImage"
             type="file"
+            defaultValue="image"
             onChange={handleImageUpload}
           />
           {image && (

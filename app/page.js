@@ -33,7 +33,6 @@ export default function Home() {
           <div
             style={{
               justifyContent: "center",
-              marginTop: "10px",
               height : "100%",
             }}
           >

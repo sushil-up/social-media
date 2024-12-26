@@ -10,22 +10,21 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-  transform: expand ? "rotate(180deg)" : "rotate(0deg)",
-}));
+// Styled component for the expand button
+const ExpandMore = styled(({ expand, ...other }) => <IconButton {...other} />)(
+  ({ theme, expand }) => ({
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+    transform: expand ? "rotate(180deg)" : "rotate(0deg)",
+  })
+);
 
 export default function RecipeReviewCard() {
   const [expanded, setExpanded] = React.useState(false);
@@ -33,25 +32,46 @@ export default function RecipeReviewCard() {
 
   React.useEffect(() => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
-    setPostData(posts);
+    setPostData(posts.reverse()); // Use reverse to avoid directly mutating `postData`
   }, []);
-
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  function generateRandomColor() {
+    const colors = [
+      "green",
+      "blue",
+      "red",
+      "yellow",
+      "cyan",
+      "orange",
+      "magenta",
+      "purple",
+      "pink",
+      "teal",
+      "lime",
+      "brown",
+      "navy",
+      "gold",
+      "silver",
+      "violet",
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
   return (
-    <div>
-      {postData?.map((value , index) => (
-        <Card
-          key={index}
-          sx={{ maxWidth: 345, marginTop: 10, marginBottom: 10 }}
-        >
+    <div style={{ height: "100%" }}>
+      {postData.map((value, index) => (
+        <Card key={index} sx={{ maxWidth: 345, marginBottom: 10 }}>
           <CardHeader
             avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
+              <Avatar
+                sx={{ bgcolor: generateRandomColor() }}
+                aria-label="recipe"
+              >
+                {value?.title?.[0]?.toUpperCase() || "?"}
               </Avatar>
             }
             action={
@@ -59,18 +79,22 @@ export default function RecipeReviewCard() {
                 <MoreVertIcon />
               </IconButton>
             }
-            title={value.title}
-            subheader={value.date}
+            title={value?.title || "No Title"}
+            subheader={value?.date || "No Date"}
           />
           <CardMedia
             component="img"
             height="194"
-            image={value.image}
-            alt="Paella dish"
+            image={
+              value?.image?.includes("fakepath") || !value?.image
+                ? "/noimage.jpg"
+                : value?.image
+            }
+            alt="Post image"
           />
           <CardContent>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              {value.description}
+              {value?.description || "No description provided."}
             </Typography>
           </CardContent>
           <CardActions disableSpacing>

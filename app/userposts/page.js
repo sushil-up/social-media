@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import RecipeReviewCard from "@/components/Posts";
 import PageTitle from "@/components/PageTitle";
+import RecipeReviewCard from "@/components/Posts";
 
 function Page() {
   return ( <>    <div style={{ position: "fixed",left: "240px",top: "74px" }} >
@@ -12,7 +12,6 @@ function Page() {
         height: "250px",
         display: "flex",
         flexDirection: "row",
-        alignItems: "center",
         gap: "20px",
         padding: "20px",
         borderRadius: "8px",

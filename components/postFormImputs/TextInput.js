@@ -7,7 +7,7 @@ export default function TextInput({
   control,
   label,
   required,
-  inputType,
+  type,
   min,
   className,
   defaultValue,
@@ -27,7 +27,7 @@ export default function TextInput({
             className={className}
             fullWidth
             label={label}
-            type={inputType}
+            type={type}
             required={required}
             error={!!errors?.[name]}
             helperText={errors?.[name]?.message}

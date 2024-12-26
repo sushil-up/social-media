@@ -8,22 +8,15 @@ const handler = NextAuth({
       async authorize(credentials) {
         try {
           const { email, password, userData } = credentials;
-
           // Parse userData as an array of user objects
           const users = JSON.parse(userData);
-
-          console.log("Parsed User Data:", users);
-
           // Find the user whose email and password match
           const user = users.find(
             (u) => u.email === email && u.password === password
           );
-
           if (user) {
-            console.log("Authentication successful for:", user.email);
             return { id: user.id, email: user.email }; // Return user data
           } else {
-            console.log("Invalid credentials");
             return null; // Authentication failed
           }
         } catch (error) {
